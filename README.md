@@ -29,3 +29,5 @@ node index > uber.geojson
 You can open it as a source in [Mapbox Studio](https://www.mapbox.com/mapbox-studio/) to create an image like this:
 
 ![image](https://farm8.staticflickr.com/7582/16202979362_102925ff95_b.jpg)
+
+[https://www.flickr.com/photos/bertrandom/16202979362/](https://www.flickr.com/photos/bertrandom/16202979362/)
