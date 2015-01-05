@@ -107,6 +107,14 @@ var getPath = function(jar, tripId, callback) {
 
             var path = parsedUrl.query.path;
 
+            if (!path) {
+                callback(null, {
+                    tripId: tripId,
+                    coords: []
+                });
+                return;
+            }
+
             var splitPath = path.split('|');
 
             var rawCoords = splitPath.slice(2);
