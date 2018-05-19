@@ -5,10 +5,11 @@ var moment = require('moment');
 var GeoJSON = require('geojson');
 var async = require('async');
 var spinner = require("char-spinner");
+var polyline = require('@mapbox/polyline');
 
 var libUrl = require('url');
 
-var targetYear = 2014;
+var targetYear = 2018;
 
 var getPage = function(jar, trips, page, callback) {
 
@@ -91,18 +92,18 @@ var getPage = function(jar, trips, page, callback) {
 
 var getPath = function(jar, tripId, callback) {
 
-    var url = 'https://riders.uber.com/trips/map/' + tripId;
+    var url = 'https://riders.uber.com/trips/' + tripId;
 
     request({url: url, jar: jar}, function (err, response, body) {
 
         var $ = cheerio.load(body);
 
-        var image = $('img').first();
+        var image = $('img.img--flush');
 
         if (image) {
 
             var imageUrl = $(image).attr('src');
-            
+
             var parsedUrl = libUrl.parse(imageUrl, true);
 
             var path = parsedUrl.query.path;
@@ -117,14 +118,16 @@ var getPath = function(jar, tripId, callback) {
 
             var splitPath = path.split('|');
 
-            var rawCoords = splitPath.slice(2);
+            var rawEnc = splitPath.slice(2).join('|');
+
+            var encodedPolyline = rawEnc.substring(4);
+
+            var swappedCoords = polyline.decode(encodedPolyline);
 
             var coords = [];
-            rawCoords.forEach(function(rawCoord) {
 
-                var splitRawCoord = rawCoord.split(',');
-                coords.push([parseFloat(splitRawCoord[1]), parseFloat(splitRawCoord[0])]);
-
+            swappedCoords.forEach(function(coord) {
+                coords.push([coord[1], coord[0]]);
             });
 
             callback(null, {

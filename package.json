@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@mapbox/polyline": "^1.0.0",
     "async": "^0.9.0",
     "char-spinner": "^1.0.1",
     "cheerio": "^0.18.0",
-    "chrome-cookies-secure": "^1.1.1",
+    "chrome-cookies-secure": "^1.1.8",
     "geojson": "^0.2.0",
     "moment": "^2.8.4",
     "randomcolor": "^0.1.1",
